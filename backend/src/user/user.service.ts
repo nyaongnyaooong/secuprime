@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import axios, { HttpStatusCode } from 'axios';
+import axios from 'axios';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -42,8 +42,10 @@ export class UserService {
     return createUserDto;
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll() {
+    const user = await this.userRepository.find();
+    const userDetail = await this.userDetailRepository.find();
+    return Object.assign(user, userDetail);
   }
 
   findOne(id: number) {
@@ -95,7 +97,8 @@ export class UserService {
   }
 
   async remove(code: number) {
-    return await this.userRepository.delete(code)
+    await this.userRepository.delete(code)
+    await this.userDetailRepository.delete(code)
   }
 
   async reset() {
