@@ -12,8 +12,6 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-
-
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -31,7 +29,7 @@ export class UserController {
 
   @Patch(':code')
   update(@Param('code') code: number, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+code, updateUserDto);
+    return this.userService.update(code, updateUserDto);
   }
 
   @Delete(':code')

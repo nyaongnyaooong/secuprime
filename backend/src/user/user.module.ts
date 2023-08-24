@@ -7,10 +7,7 @@ import { UserDetail } from './entities/userdetail.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      User,
-      UserDetail
-    ]),
+    TypeOrmModule.forFeature([User, UserDetail]),
   ],
   controllers: [UserController],
   providers: [

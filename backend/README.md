@@ -8,7 +8,11 @@
 
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white" />
 
+  <img src="https://img.shields.io/badge/TypeORM-4285F4?style=flat-square&logo=typeorm&logoColor=white" />
+
+  <br/>
+
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" />
 
-  <img src="https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=scss&logoColor=white" />
+  <img src="https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=sass&logoColor=white" />
 </div>
