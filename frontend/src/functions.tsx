@@ -8,7 +8,7 @@ type Setter = React.Dispatch<React.SetStateAction<User[]>>
 
 const refreshRecords: (stateFunction: Setter) => Promise<void> = async (stateFunction) => {
   try {
-    const apiResponse = await axios.get('http://localhost:3001/api/user');
+    const apiResponse = await axios.get('/api/user');
     if (apiResponse.data === undefined) throw new Error('server api error')
     const { user, userDetail }: { user: UserRecord[], userDetail: UserDetailRecord[] } = apiResponse.data;
 
@@ -24,7 +24,7 @@ const refreshRecords: (stateFunction: Setter) => Promise<void> = async (stateFun
 
 const resetRecord = async (stateFunction: Setter) => {
   try {
-    await axios.post('http://localhost:3001/api/user/reset')
+    await axios.post('/api/user/reset')
     await refreshRecords(stateFunction)
   } catch {
 
