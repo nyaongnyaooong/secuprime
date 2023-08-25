@@ -1,13 +1,9 @@
 import { AxiosError } from "axios";
-import { createRecord } from "./functions";
-import { UserCreateModalProps } from "./props.interface";
+import { modifyRecord } from "./functions";
+import { UserModifyModalProps } from "./props.interface";
 
-const UserCreateModal: React.FC<UserCreateModalProps> = (props) => {
-  const { hidden, controlModal, formValue, setFormValue, refresh } = props;
-  const { setHiddenModal } = controlModal;
-
-  // const [formValue, setFormValue] = useState<UserModify>(userInit);
-
+const UserModifyModal: React.FC<UserModifyModalProps> = ({ hidden, controlModal, formValue, setFormValue, refresh, modifyInitCode }) => {
+  const { setHiddenModifyModal } = controlModal;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -18,34 +14,25 @@ const UserCreateModal: React.FC<UserCreateModalProps> = (props) => {
   };
 
   return (
-
     <form
       className={'modal ' + (hidden ? 'hidden' : 'visible')}
-      onSubmit={
-        async (event) => {
-          event.preventDefault();
-          try {
-            await createRecord(formValue);
-            setHiddenModal(true);
-            await refresh();
-          } catch (err) {
-            if (err instanceof AxiosError) {
-              console.log(err)
-              if (err.response?.data.message === 'duplicate guest code') alert('이미 존재하는 고객 코드입니다');
-              else alert('서버 에러입니다');
-            } else {
-              alert(err);
-
-            }
+      onSubmit={async (event) => {
+        event.preventDefault();
+        try {
+          await modifyRecord(modifyInitCode, formValue);
+          setHiddenModifyModal(true);
+          await refresh();
+        } catch (err) {
+          if (err instanceof AxiosError) {
+            if (err.response?.data.message === 'user code already using') alert('이미 사용중인 고객번호입니다')
+          } else {
+            alert(err)
           }
-
         }
-      }
+      }}
       onClick={
-        (event) => {
-          event.preventDefault()
-          event.stopPropagation()
-          setHiddenModal(true);
+        () => {
+          setHiddenModifyModal(true);
         }
       }
     >
@@ -112,12 +99,11 @@ const UserCreateModal: React.FC<UserCreateModalProps> = (props) => {
         </div>
         <div className="buttonArea" >
           <button type='submit' onClick={(event) => event.stopPropagation()}>전송</button>
-          <button type='button' onClick={() => setHiddenModal(true)}>취소</button>
+          <button type='button' onClick={() => setHiddenModifyModal(true)}>취소</button>
         </div>
-
       </div>
-    </form>
+    </form >
   )
 }
 
-export default UserCreateModal;
+export default UserModifyModal;
