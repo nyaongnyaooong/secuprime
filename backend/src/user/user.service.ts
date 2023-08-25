@@ -45,15 +45,10 @@ export class UserService {
   async findAll() {
     const user = await this.userRepository.find();
     const userDetail = await this.userDetailRepository.find();
-    return Object.assign(user, userDetail);
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  findMany(page: number) {
-    return `This action returns a user data of #${page} page`;
+    return {
+      user,
+      userDetail
+    }
   }
 
   async update(code: number, updateUserDto: UpdateUserDto) {
@@ -67,6 +62,7 @@ export class UserService {
     const duplicateUser = await this.userRepository.findOne({
       where: { guest_code: updateUserDto.guest_code }
     })
+    console.log(duplicateUser, code, updateUserDto.guest_code)
     if (duplicateUser && code !== updateUserDto.guest_code) throw new HttpException('user code already using', HttpStatus.BAD_REQUEST)
 
     // detail data 받아오기

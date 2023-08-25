@@ -17,19 +17,9 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':code')
-  findOne(@Param('id') code: number) {
-    return this.userService.findOne(+code);
-  }
-
-  @Get('/page/:page')
-  findMany(@Param('page') page: string) {
-    return this.userService.findMany(+page);
-  }
-
   @Patch(':code')
-  update(@Param('code') code: number, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(code, updateUserDto);
+  update(@Param('code') code: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(+code, updateUserDto);
   }
 
   @Delete(':code')
