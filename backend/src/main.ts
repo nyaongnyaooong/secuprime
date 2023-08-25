@@ -11,6 +11,6 @@ async function bootstrap() {
     credentials: true, // 필요한 경우 자격 증명을 포함합니다.
   });
 
-  await app.listen(3001);
+  await app.listen(80);
 }
 bootstrap();
